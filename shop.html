@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Flavours — PopFuel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Lato:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Pop<span>Fuel</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+    <div class="nav-icons">
+      <a href="cart.html" aria-label="Cart">🛒<span class="cart-count" data-cart-count style="display:none;">0</span></a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart (<span data-cart-count>0</span>)</a>
+  </div>
+</header>
+
+<div class="page-header">
+  <h1 id="pageTitle">All Flavours</h1>
+</div>
+
+<div class="container" style="padding-bottom:64px;">
+  <div id="filterPills" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px;"></div>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span id="footerYear"></span>
+      <a href="index.html" style="color:rgba(255,255,255,0.6);">← Back to Home</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('footerYear').textContent = '© ' + new Date().getFullYear() + ' PopFuel';
+
+  const params = new URLSearchParams(window.location.search);
+  const activeCategory = (params.get('category') || 'all').toLowerCase();
+
+  function renderShop(category) {
+    const filtered = category === 'all'
+      ? PRODUCTS
+      : PRODUCTS.filter((p) => p.category.toLowerCase() === category);
+
+    document.getElementById('pageTitle').textContent =
+      category === 'all' ? 'All Flavours' : capitalize(category) + ' Flavours';
+
+    const pills = ['all', ...CATEGORIES.map((c) => c.toLowerCase())];
+    document.getElementById('filterPills').innerHTML = pills.map((c) => `
+      <a href="shop.html?category=${c}" class="filter-pill ${c === category ? 'active' : ''}">${capitalize(c)}</a>
+    `).join('');
+
+    renderProductGrid('productGrid', filtered);
+  }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  renderShop(activeCategory);
+</script>
+</body>
+</html>

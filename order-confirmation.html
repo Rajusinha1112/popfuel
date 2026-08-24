@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — PopFuel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Lato:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .confirm-wrap { max-width: 560px; margin: 0 auto; padding: 64px 20px; text-align: center; }
+  .check-circle { width: 64px; height: 64px; border-radius: 50%; background: rgba(60,110,113,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 28px; color: var(--accent); }
+  .tracking-box { margin-top: 40px; background: #fff; border: 1px solid rgba(184,80,66,0.1); border-radius: var(--radius-card); padding: 24px; text-align: left; }
+  .tracking-steps { display: flex; justify-content: space-between; position: relative; margin-top: 12px; }
+  .tracking-step { flex: 1; text-align: center; position: relative; }
+  .tracking-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(184,80,66,0.15); margin: 0 auto; position: relative; z-index: 1; }
+  .tracking-dot.active { background: var(--primary); }
+  .tracking-step span { display: block; font-size: 11px; color: rgba(51,51,51,0.5); margin-top: 8px; }
+  .tracking-line { position: absolute; top: 6px; left: 0; right: 0; height: 2px; background: rgba(184,80,66,0.15); z-index: 0; }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Pop<span>Fuel</span></a>
+    <nav class="nav-links"><a href="index.html">Home</a><a href="shop.html">Shop</a></nav>
+    <div class="nav-icons"><a href="cart.html">🛒<span class="cart-count" data-cart-count style="display:none;">0</span></a></div>
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="shop.html">Shop</a></div>
+</header>
+
+<div class="confirm-wrap">
+  <div class="check-circle">✓</div>
+  <h1 style="font-size:28px; font-weight:700;">Order Confirmed</h1>
+  <p style="color:rgba(51,51,51,0.6); margin-top:12px;">
+    Order <strong id="orderIdLabel"></strong> has been placed. A confirmation email is on its way.
+  </p>
+
+  <div class="tracking-box">
+    <h3 style="font-size:14px; font-weight:600;">Tracking</h3>
+    <div class="tracking-steps">
+      <div class="tracking-line"></div>
+      <div class="tracking-step"><div class="tracking-dot active"></div><span>Placed</span></div>
+      <div class="tracking-step"><div class="tracking-dot"></div><span>Packed</span></div>
+      <div class="tracking-step"><div class="tracking-dot"></div><span>Shipped</span></div>
+      <div class="tracking-step"><div class="tracking-dot"></div><span>Delivered</span></div>
+    </div>
+    <p class="tbd-text" style="margin-top:20px;">Live courier tracking connects once a shipping partner (e.g. Shiprocket / Delhivery) is wired in.</p>
+  </div>
+
+  <a href="shop.html" class="btn btn-primary" style="margin-top:32px; display:inline-block;">Continue Shopping</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom"><div class="footer-bottom-inner"><span id="footerYear"></span></div></div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('footerYear').textContent = '© ' + new Date().getFullYear() + ' PopFuel';
+  const orderId = new URLSearchParams(window.location.search).get('id') || '—';
+  document.getElementById('orderIdLabel').textContent = '#' + orderId;
+</script>
+</body>
+</html>

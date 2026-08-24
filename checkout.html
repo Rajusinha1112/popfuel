@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — PopFuel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Lato:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .checkout-layout { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; display: grid; gap: 40px; }
+  @media (min-width: 768px) { .checkout-layout { grid-template-columns: 2fr 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .form-group label { font-size: 12px; font-weight: 700; color: rgba(51,51,51,0.6); }
+  .form-group input { padding: 11px 16px; border-radius: var(--radius-btn); border: 1px solid rgba(184,80,66,0.2); font-family: var(--font-body); font-size: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .payment-option { display: flex; align-items: center; gap: 12px; border: 1px solid rgba(184,80,66,0.15); border-radius: var(--radius-btn); padding: 12px 16px; margin-bottom: 8px; cursor: pointer; }
+  .summary-box { background: #fff; border: 1px solid rgba(184,80,66,0.1); border-radius: var(--radius-card); padding: 24px; height: fit-content; }
+  .summary-line { display: flex; justify-content: space-between; font-size: 14px; color: rgba(51,51,51,0.7); margin-bottom: 8px; }
+  .summary-total { display: flex; justify-content: space-between; font-family: var(--font-heading); font-weight: 700; border-top: 1px solid rgba(184,80,66,0.1); margin-top: 12px; padding-top: 12px; }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Pop<span>Fuel</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+    <div class="nav-icons"><a href="cart.html">🛒<span class="cart-count" data-cart-count style="display:none;">0</span></a></div>
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="cart.html">Cart</a>
+  </div>
+</header>
+
+<div class="page-header"><h1>Checkout</h1></div>
+
+<div id="checkoutRoot"></div>
+
+<footer class="footer">
+  <div class="footer-bottom"><div class="footer-bottom-inner"><span id="footerYear"></span></div></div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('footerYear').textContent = '© ' + new Date().getFullYear() + ' PopFuel';
+
+  const items = getCart();
+  const root = document.getElementById('checkoutRoot');
+
+  if (items.length === 0) {
+    root.innerHTML = `
+      <div class="empty-state">
+        <p>Your cart is empty — add flavours before checking out.</p>
+        <a href="shop.html" class="btn btn-primary">Shop Flavours</a>
+      </div>
+    `;
+  } else {
+    const subtotal = cartSubtotal();
+    const linesHtml = items.map((i) => `
+      <div class="summary-line"><span>${i.name} × ${i.qty}</span><span>$${(i.price * i.qty).toFixed(2)}</span></div>
+    `).join('');
+
+    root.innerHTML = `
+      <form class="checkout-layout" id="checkoutForm" onsubmit="handleCheckoutSubmit(event)">
+        <div>
+          <h3 style="font-size:16px; font-weight:600; margin-bottom:16px;">Shipping Details</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Full Name</label><input type="text" required></div>
+            <div class="form-group"><label>Phone</label><input type="tel" required></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" required></div>
+          <div class="form-group"><label>Address</label><input type="text" required></div>
+          <div class="form-row">
+            <div class="form-group"><label>City</label><input type="text" required></div>
+            <div class="form-group"><label>Pincode</label><input type="text" required></div>
+          </div>
+
+          <h3 style="font-size:16px; font-weight:600; margin:24px 0 12px;">Payment Method</h3>
+          <label class="payment-option"><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label>
+          <label class="payment-option"><input type="radio" name="payment" value="online"> Pay Online (Card / UPI)</label>
+        </div>
+
+        <div class="summary-box">
+          <h3 style="font-size:16px; font-weight:600; margin-bottom:16px;">Order Summary</h3>
+          ${linesHtml}
+          <div class="summary-total"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:20px;" id="placeOrderBtn">Place Order</button>
+        </div>
+      </form>
+    `;
+  }
+
+  function handleCheckoutSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('placeOrderBtn');
+    btn.textContent = 'Placing Order…';
+    btn.disabled = true;
+
+    // TODO: replace with a real backend call (Google Apps Script -> Sheets,
+    // or any order-processing endpoint) that emails/logs the order.
+    const orderId = 'PF' + Date.now().toString().slice(-8);
+
+    setTimeout(() => {
+      clearCart();
+      window.location.href = `order-confirmation.html?id=${orderId}`;
+    }, 600);
+  }
+</script>
+</body>
+</html>

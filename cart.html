@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart — PopFuel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Lato:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .cart-layout { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; display: grid; gap: 40px; }
+  @media (min-width: 768px) { .cart-layout { grid-template-columns: 2fr 1fr; } }
+  .cart-line { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid rgba(184,80,66,0.1); border-radius: var(--radius-card); padding: 16px; margin-bottom: 12px; }
+  .cart-line-thumb { width: 64px; height: 64px; border-radius: var(--radius-btn); flex-shrink: 0; }
+  .cart-line-info { flex: 1; }
+  .cart-line-info h3 { font-size: 14px; font-weight: 600; }
+  .cart-line-info p { font-size: 12px; color: rgba(51,51,51,0.5); margin-top: 2px; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; }
+  .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(184,80,66,0.2); color: rgba(51,51,51,0.6); }
+  .qty-btn:hover { border-color: var(--primary); }
+  .remove-link { font-size: 12px; color: rgba(51,51,51,0.4); margin-left: 12px; }
+  .remove-link:hover { color: var(--primary); }
+  .summary-box { background: #fff; border: 1px solid rgba(184,80,66,0.1); border-radius: var(--radius-card); padding: 24px; height: fit-content; }
+  .summary-row { display: flex; justify-content: space-between; font-size: 14px; color: rgba(51,51,51,0.7); margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Pop<span>Fuel</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+    <div class="nav-icons">
+      <a href="cart.html" aria-label="Cart">🛒<span class="cart-count" data-cart-count style="display:none;">0</span></a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart (<span data-cart-count>0</span>)</a>
+  </div>
+</header>
+
+<div class="page-header"><h1>Your Cart</h1></div>
+
+<div id="cartRoot"></div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span id="footerYear"></span>
+      <a href="shop.html" style="color:rgba(255,255,255,0.6);">← Continue Shopping</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('footerYear').textContent = '© ' + new Date().getFullYear() + ' PopFuel';
+
+  function renderCart() {
+    const items = getCart();
+    const root = document.getElementById('cartRoot');
+
+    if (items.length === 0) {
+      root.innerHTML = `
+        <div class="empty-state">
+          <p>Your cart is empty.</p>
+          <a href="shop.html" class="btn btn-primary">Shop Flavours</a>
+        </div>
+      `;
+      return;
+    }
+
+    const linesHtml = items.map((item) => `
+      <div class="cart-line">
+        <div class="img-placeholder cart-line-thumb"></div>
+        <div class="cart-line-info">
+          <h3>${item.name}</h3>
+          <p>$${item.price.toFixed(2)}</p>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty('${item.slug}', ${item.qty - 1})">−</button>
+          <span style="width:20px; text-align:center; font-size:14px;">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.slug}', ${item.qty + 1})">+</button>
+        </div>
+        <button class="remove-link" onclick="changeQty('${item.slug}', 0)">Remove</button>
+      </div>
+    `).join('');
+
+    const subtotal = cartSubtotal();
+
+    root.innerHTML = `
+      <div class="cart-layout">
+        <div>${linesHtml}</div>
+        <div class="summary-box">
+          <h3 style="font-size:16px; font-weight:600; margin-bottom:16px;">Order Summary</h3>
+          <div class="summary-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+          <p class="tbd-text" style="font-size:12px; margin-bottom:16px;">Shipping calculated at checkout.</p>
+          <a href="checkout.html" class="btn btn-primary" style="display:block; text-align:center;">Checkout</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function changeQty(slug, qty) {
+    updateCartQty(slug, qty);
+    renderCart();
+  }
+
+  renderCart();
+</script>
+</body>
+</html>

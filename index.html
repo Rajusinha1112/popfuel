@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PopFuel — High-Protein Air-Popped Popcorn</title>
+<meta name="description" content="Small-batch roasted, air-popped popcorn with 10g protein and 4g fibre per pack. Better-for-you snacking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Lato:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 1. Announcement Bar -->
+<div class="announcement-bar">
+  <div class="marquee-track">
+    <span>Free shipping on orders over $30 · New flavour: Pickle Tickle · Small-batch, air-popped</span>
+    <span>Free shipping on orders over $30 · New flavour: Pickle Tickle · Small-batch, air-popped</span>
+  </div>
+</div>
+
+<!-- 2. Navbar -->
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Pop<span>Fuel</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="shop.html?category=all">Combos</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+    <div class="nav-icons">
+      <a href="cart.html" aria-label="Cart">
+        🛒
+        <span class="cart-count" data-cart-count style="display:none;">0</span>
+      </a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart</a>
+    <div class="mobile-menu-icons">
+      <a href="cart.html">Cart (<span data-cart-count>0</span>)</a>
+    </div>
+  </div>
+</header>
+
+<!-- 3. Hero Banner -->
+<section class="hero">
+  <div class="reveal">
+    <span class="hero-eyebrow">small-batch, air-popped</span>
+    <h1>Protein-packed popcorn, zero guilt crunch.</h1>
+    <p>10g protein and 4g fibre per pack. No palm oil, ever. Snacking that actually works for you.</p>
+    <div class="hero-ctas">
+      <a href="shop.html" class="btn btn-primary">Shop Flavours</a>
+      <a href="shop.html" class="btn btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="img-placeholder hero-image reveal">
+    Hero image<br><small>pending client photography</small>
+  </div>
+</section>
+
+<!-- 4. Pick Your Crunch -->
+<section class="crunch-section">
+  <h2 class="section-heading reveal">Pick Your Crunch</h2>
+  <div class="crunch-scroller" id="crunchTiles"></div>
+</section>
+
+<!-- 5. Featured Products -->
+<section class="section-tint">
+  <div class="container">
+    <h2 class="section-heading reveal">Featured Flavours</h2>
+    <div class="product-grid reveal" id="featuredProducts"></div>
+  </div>
+</section>
+
+<!-- 6. Why PopFuel -->
+<section class="why-section">
+  <h2 class="section-heading reveal">Why PopFuel</h2>
+  <div class="why-grid">
+    <div class="reveal">
+      <div class="why-icon">💪</div>
+      <h3>10g Protein</h3>
+      <p>Per pack, plant-derived</p>
+    </div>
+    <div class="reveal">
+      <div class="why-icon">🌾</div>
+      <h3>4g Fibre</h3>
+      <p>Keeps you full, longer</p>
+    </div>
+    <div class="reveal">
+      <div class="why-icon">💨</div>
+      <h3>Air-Popped</h3>
+      <p>No frying, no excess oil</p>
+    </div>
+    <div class="reveal">
+      <div class="why-icon">🌿</div>
+      <h3>No Palm Oil</h3>
+      <p>Ever. On any flavour</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Brand Video -->
+<section class="video-section">
+  <div class="container">
+    <h2 class="section-heading reveal">How PopFuel Is Made</h2>
+    <div class="video-frame reveal">
+      Brand video pending — embed real video URL/embed code here once available.
+    </div>
+  </div>
+</section>
+
+<!-- 8. Available On -->
+<section class="available-on">
+  <p class="available-on-label">Available On</p>
+  <div class="logo-track">
+    <span>Amazon</span><span>Flipkart</span><span>Blinkit</span><span>Zepto</span><span>Big Basket</span>
+    <span>Amazon</span><span>Flipkart</span><span>Blinkit</span><span>Zepto</span><span>Big Basket</span>
+  </div>
+</section>
+
+<!-- 9. Customer Reviews -->
+<section class="reviews-section">
+  <h2 class="section-heading reveal">Customer Reviews</h2>
+  <div class="reviews-scroller">
+    <div class="review-card reveal">
+      <div><div class="review-stars">★★★★★</div><p class="review-quote">Real customer review pending — add once available.</p></div>
+      <p class="review-author">— Customer name pending</p>
+    </div>
+    <div class="review-card reveal">
+      <div><div class="review-stars">★★★★★</div><p class="review-quote">Real customer review pending — add once available.</p></div>
+      <p class="review-author">— Customer name pending</p>
+    </div>
+    <div class="review-card reveal">
+      <div><div class="review-stars">★★★★★</div><p class="review-quote">Real customer review pending — add once available.</p></div>
+      <p class="review-author">— Customer name pending</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Big CTA -->
+<section class="big-cta-wrap">
+  <div class="big-cta reveal">
+    <span class="hero-eyebrow">limited batch</span>
+    <h2>Try All 7 Flavours</h2>
+    <p>The full-crunch combo pack — one of every flavour, at a better price.</p>
+    <a href="shop.html" class="btn">Shop Combo Pack</a>
+  </div>
+</section>
+
+<!-- 11. Newsletter -->
+<section class="newsletter">
+  <h2 class="section-heading reveal" style="margin-bottom:8px;">Get 10% Off Your First Order</h2>
+  <p class="reveal">Join the list for new flavour drops and offers.</p>
+  <form class="newsletter-form reveal" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+    <input type="email" required placeholder="you@email.com" id="newsletterEmail">
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+  </form>
+  <p class="newsletter-success" id="newsletterSuccess" style="display:none;">You're on the list — check your inbox.</p>
+</section>
+
+<!-- 12. Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Pop<span>Fuel</span></div>
+      <p>High-protein, air-popped popcorn. Small-batch roasted, better-for-you snacking.</p>
+      <div class="footer-social"><span>I</span><span>F</span><span>X</span></div>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul><li><a href="shop.html">All Flavours</a></li><li><a href="shop.html">Combo Packs</a></li></ul>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <ul><li><a href="#">FAQ & Returns</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">Contact Us</a></li></ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul><li><a href="#">Our Story</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span id="footerYear"></span>
+      <div class="payment-icons"><span>Visa</span><span>Mastercard</span><span>UPI</span><span>COD</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('footerYear').textContent = '© ' + new Date().getFullYear() + ' PopFuel. All rights reserved.';
+
+  renderProductGrid('featuredProducts', PRODUCTS.slice(0, 4));
+
+  document.getElementById('crunchTiles').innerHTML = CATEGORIES.map((cat) => `
+    <a href="shop.html?category=${cat.toLowerCase()}" class="crunch-tile">
+      <div class="img-placeholder ratio-square">${cat}</div>
+      <div class="crunch-tile-label">${cat}</div>
+    </a>
+  `).join('');
+
+  function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    // TODO: wire to Brevo/Mailchimp free-tier list via their form endpoint.
+    document.getElementById('newsletterForm').style.display = 'none';
+    document.getElementById('newsletterSuccess').style.display = 'block';
+  }
+
+  initScrollReveal();
+</script>
+</body>
+</html>
